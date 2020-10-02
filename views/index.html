@@ -99,11 +99,11 @@
             <v-container>
                 <v-row>
                     <v-col cols="6" sm="4">
-                        <v-select label="游戏类型（必选）" :items="consts.type"
+                        <v-select label="游戏类型" :items="consts.type"
                                   v-model="inputBasic.type"></v-select>
                     </v-col>
                     <v-col cols="6" sm="4">
-                        <v-select label="游戏版本（必选）" :items="consts.versions"
+                        <v-select label="游戏版本" :items="consts.versions"
                                   v-model="inputBasic.format"></v-select>
                     </v-col>
                     <v-col cols="12" sm="4">
@@ -278,6 +278,7 @@
             loading: false,
             inputBasic: {
                 type: "normal",
+                versions: 6,
                 debug: false
             },
             logs: [],
@@ -301,7 +302,7 @@
                 }
             },
             consts: () => ({
-                type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
+                type: [{text: "1.13及以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
                 resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
                     text: "自定义",
                     value: "custom"
