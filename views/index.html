@@ -278,7 +278,8 @@
                     resource: this.input.resource.map(v => v.slice("modules/".length)),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
-                    sfw: this.input.language.includes("modules/sfw")
+                    sfw: this.input.language.includes("modules/sfw"),
+                    output: "./output/"
                 })
                 console.log(data)
                 axios({url: '/ajax', method: 'POST', data}).then(function (res) {
