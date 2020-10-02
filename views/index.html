@@ -172,7 +172,7 @@
                     <v-expansion-panels v-model="logsPanel" multiple>
                         <v-expansion-panel v-for="(item,i) in logs" :key="i">
                             <v-expansion-panel-header>
-                                {{new Date(Number(item.ts)).toLocaleString()}} {{ item.title }}
+                                {% raw %}{{moment(new Date(item.ts)).format('YYYY-MM-DD HH:mm:ss')}} {{ item.title }}{% endraw %}
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{{item.content}}</pre>
