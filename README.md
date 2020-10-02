@@ -1,10 +1,8 @@
 # 中文Minecraft Wiki梗体中文资源包 · Unofficial
 
-[![GitHub issues](https://img.shields.io/github/issues/Teahouse-Studios/mcwzh-meme-resourcepack?logo=github&style=flat-square)](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues)    [![GitHub pull requests](https://img.shields.io/github/issues-pr/Teahouse-Studios/mcwzh-meme-resourcepack?logo=github&style=flat-square)](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/pulls)    [![License](https://img.shields.io/static/v1?label=License&message=CC%20BY-NC-SA%204.0&color=db2331&style=flat-square&logo=creative%20commons)](https://creativecommons.org/licenses/by-nc-sa/4.0/)    [![License](https://img.shields.io/static/v1?label=License+for+script&message=Apache-2.0&color=db2331&style=flat-square&logo=apache)](https://www.apache.org/licenses/LICENSE-2.0)    [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Teahouse-Studios/mcwzh-meme-resourcepack?label=latest%20version&style=flat-square)](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/releases)    [![Minecraft ver](https://img.shields.io/static/v1?label=Minecraft%20version&message=1.12.2%2B&color=db2331&style=flat-square&logo=)](https://minecraft.net)
+[![Banner](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/blob/master/materials/zh_meme_banner.png?raw=true)](https://gtch.utools.club/)
 
-[![Banner](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/blob/master/materials/zh_meme_banner.png?raw=true)](https://www.mcbbs.net/thread-1004643-1-1.html)
-
-注：此资源包适用于Java版。有关到基岩版的移植，参见[基岩版移植](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock)。
+注：此资源包适用于Java版。
 
 **注：若发现可能存在该资源包上头的情况，请立刻~~食用~~阅读[译名标准化](https://minecraft-zh.gamepedia.com/Minecraft_Wiki:译名标准化)。**
 
@@ -14,7 +12,7 @@
 
 ## 用法
 
-在[Releases](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/releases)中下载此资源包，或在[网页构建](https://download.powerdia.nl)中选择自定义选项下载。
+在[网页构建](https://gtch.utools.club/)中选择选项下载。
 
 ### 常规
 
@@ -28,7 +26,7 @@
 
 ### 1.12.2及以下版本支持
 
-1.13对可翻译字符串进行了一次破坏性更改，这意味着1.12.2及以下无法直接正常使用本资源包。同时，1.12.2及以下版本并不支持读取ASCII格式的Unicode码。通过建立映射表，我们初步实现了1.12.2及以下版本对大部分字符串的支持（也就是除去命令），详见Issue [#34](https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/34)。1.12.2及以下版本请使用带有 `_legacy` 的预设包。
+1.13对可翻译字符串进行了一次破坏性更改，这意味着1.12.2及以下无法直接正常使用本资源包。同时，1.12.2及以下版本并不支持读取ASCII格式的Unicode码。通过建立映射表，我们初步实现了1.12.2及以下版本对大部分字符串的支持（也就是除去命令）。1.12.2及以下版本请使用带有 `_legacy` 的预设包。
 
 ### 对旧版本的兼容
 
@@ -52,7 +50,7 @@
 
 ### 体验最新内容
 
-想要**抢先体验**最前沿~~整活~~版本，请按以下方法操作，或者不会命令行可以前往[网页打包](https://download.powerdia.nl)：
+想要**抢先体验**最前沿~~整活~~版本，请按以下方法操作，或者不会命令行可以前往[网页打包](https://gtch.utools.club/)：
 
 #### 先决条件
 
@@ -63,7 +61,7 @@
 1. 下载源码：
 
 ``` bash
-git clone https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack.git
+git clone https://github.com/rdp-studio/mcwzh-meme-resourcepack.git
 ```
 
 2. 进入文件夹：
@@ -122,5 +120,3 @@ python build.py -h
   * 这不是法律建议。
 * 本项目附带的Mod内容字符串，未经梗体中文修改过的部分，按照 ***原作品的协议*** 发布。
 * 本项目的自动构建脚本以 ***Apache 2.0*** 协议发布。
-
-![GitHub forks](https://img.shields.io/github/forks/Teahouse-Studios/mcwzh-meme-resourcepack?style=social)    ![GitHub stars](https://img.shields.io/github/stars/Teahouse-Studios/mcwzh-meme-resourcepack?style=social)    ![GitHub watchers](https://img.shields.io/github/watchers/Teahouse-Studios/mcwzh-meme-resourcepack?style=social)
