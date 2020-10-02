@@ -61,7 +61,7 @@ def ajax():
 
 @app.route('/builds/<file_name>', methods=['GET'])
 def get_file(file_name):
-    directory = "./builds"
+    directory = "./output"
     try:
         response = make_response(send_from_directory(
             directory, file_name, as_attachment=True))
