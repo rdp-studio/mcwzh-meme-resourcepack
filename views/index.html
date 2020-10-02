@@ -1,23 +1,23 @@
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>梗体中文 · 在线构建</title>
     <meta content="梗体中文 · 在线构建" property="og:title">
     <meta content="website" property="og:type">
     <meta content="梗体中文资源包在线构建系统，帮助用户构建。" property="og:description">
-    <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2,npm/moment@2.24.0/min/moment.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    
     <style>
         .v-main__wrap > container {
             margin-top: 16px;
@@ -33,23 +33,15 @@
 <div id="app">
     <v-app>
         <v-main>
-            {% if header_existence %}
-                {% include './custom/header.html' %}
-            {% endif %}
+            
             <v-app-bar
                     outlined flat
                     color="white">
-                <v-toolbar-title>梗体中文 · 在线构建
-                    <sub v-if="$vuetify.breakpoint.name !== 'xs'"><small>Sponsored by SPGoding</small></sub>
-                </v-toolbar-title>
+                <v-toolbar-title>梗体中文 · 在线构建</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <div v-if="$vuetify.breakpoint.name !== 'xs'">
-                    <v-btn text rel="noopener noreferrer" href="https://www.mcbbs.net/thread-1004643-1-1.html">
-                        <v-icon left href="https://www.mcbbs.net/thread-1004643-1-1.html">mdi-post</v-icon>
-                        MCBBS
-                    </v-btn>
                     <v-btn text rel="noopener noreferrer"
-                           href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack">
+                           href="https://github.com/rdp-studio/mcwzh-meme-resourcepack">
                         <v-icon left>mdi-github-circle</v-icon>
                         Github
                     </v-btn>
@@ -72,20 +64,8 @@
                         </template>
 
                         <v-list dense>
-                            <v-list-item>
-                                <v-list-item-text>Sponsored by SPGoding</v-list-item-text>
-                            </v-list-item>
                             <v-list-item rel="noopener noreferrer"
-                                         href="https://www.mcbbs.net/thread-1004643-1-1.html">
-                                <v-list-item-icon>
-                                    <v-icon>mdi-post</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-text>
-                                    MCBBS
-                                </v-list-item-text>
-                            </v-list-item>
-                            <v-list-item rel="noopener noreferrer"
-                                         href="https://github.com/lakejason0/mcwzh-meme-resourcepack">
+                                         href="https://github.com/rdp-studio/mcwzh-meme-resourcepack">
                                 <v-list-item-icon>
                                     <v-icon>mdi-github-circle</v-icon>
                                 </v-list-item-icon>
@@ -106,77 +86,82 @@
                     </v-menu>
                 </div>
             </v-app-bar>
-            {% if notice_existence %}
-                {% include './custom/notice.html' %}
-            {% endif %}
+            <v-alert
+      dense
+      tile
+      type="info"
+    >
+在线构建尚处于测试阶段。
+</v-alert>
+            <v-tabs
+                    fixed-tabs
+                    background-color="transparent"
+                    v-model="tab"
+            >
+                <v-tab>
+                    Java版
+                </v-tab>
+                <v-tab>
+                    基岩版
+                </v-tab>
+            </v-tabs>
+
             <v-container>
-                <v-row>
-                    <v-col cols="6" sm="4">
-                        <v-select label="游戏版本" :items="consts.type"
-                                  v-model="inputBasic.type"></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                        <v-select label="Mod内容选择" :items="consts.modOption" v-model="input.modOption"></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                        <v-select label="语言选项" :items="consts.languageOption" v-model="input.languageOption"></v-select>
-                    </v-col>
-                </v-row>
-                <v-checkbox label='调试模式' v-model="inputBasic.debug"></v-checkbox>
-                <v-row>
-                    <v-col cols="12" sm="4">
-                        <v-select label="附加包/材质选择" multiple
-                                  :items="consts.resourceList" v-model="input.resource">
-                            <template v-slot:prepend-item>
-                                <v-list-item ripple @click="toggleResource">
-                                    <v-list-item-action>
-                                        <v-icon>{% raw %} {{ resourceIcon }}{% endraw %}</v-icon>
-                                    </v-list-item-action>
-                                    <v-list-item-content>
-                                        <v-list-item-title>全选</v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                                <v-divider class="mt-2"></v-divider>
-                            </template>
-                            <template v-slot:item="data">
-                                <v-list-item v-bind="data.attrs" v-on="data.on">
-                                    <v-list-item-action>
-                                        <v-checkbox :value="data.attrs.inputValue"
-                                                    @change="data.parent.$emit('select')"></v-checkbox>
-                                    </v-list-item-action>
-                                    <v-list-item-content>
-                                        <v-list-item-title>{% raw %} {{ data.item }} {% endraw %}</v-list-item-title>
-                                        <v-list-item-subtitle>{% raw %} {{ getManifest(data.item)
-                                            }}{% endraw %}</v-list-item-subtitle>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </template>
-                        </v-select>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                        <v-select label="Mod/附加内容选择" :disabled="input.modOption !== 'custom'"
-                                  :items="consts.modList" v-model="input.mod" multiple
-                        ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                        <v-select label="语言选择" :disabled="input.languageOption === 'none'" multiple
-                                  :items="consts.languageList" v-model="input.language">
-                            <template v-slot:item="data">
-                                <v-list-item v-bind="data.attrs" v-on="data.on">
-                                    <v-list-item-action>
-                                        <v-checkbox :value="data.attrs.inputValue"
-                                                    @change="data.parent.$emit('select')"></v-checkbox>
-                                    </v-list-item-action>
-                                    <v-list-item-content>
-                                        <v-list-item-title>{% raw %} {{ data.item }} {% endraw %}</v-list-item-title>
-                                        <v-list-item-subtitle>{% raw %} {{ getManifest(data.item)
-                                            }}{% endraw %}</v-list-item-subtitle>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </template>
-                        </v-select>
-                    </v-col>
-                </v-row>
+                <v-tabs-items v-model="tab">
+                    <v-tab-item>
+                        <v-row>
+                            <v-col cols="4" sm="4">
+                                <v-select v-model="inputBasic.format" :items="consts.versions"
+                                          label="游戏版本"></v-select>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                                <v-select label="Mod内容选择" :items="consts.modOption"
+                                          v-model="input.modOption"></v-select>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                                <v-select label="语言选项" :items="consts.languageOption"
+                                          v-model="input.languageOption"></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                                <resource-selector></resource-selector>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                                <v-select label="Mod/附加内容选择" :disabled="input.modOption !== 'custom'"
+                                          :items="consts.modList" v-model="input.mod" multiple
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                                <v-select label="语言选择" :disabled="input.languageOption === 'none'" multiple
+                                          :items="consts.languageList" v-model="input.language">
+                                    <template v-slot:item="data">
+                                        <v-list-item v-bind="data.attrs" v-on="data.on">
+                                            <v-list-item-action>
+                                                <v-checkbox :value="data.attrs.inputValue"
+                                                            @change="data.parent.$emit('select')"></v-checkbox>
+                                            </v-list-item-action>
+                                            <v-list-item-content>
+                                                <v-list-item-title> {{ data.item
+                                                    }} </v-list-item-title>
+                                                <v-list-item-subtitle> {{ getManifest(data.item)
+                                                    }}</v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </template>
+                                </v-select>
+                            </v-col>
+                        </v-row>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <v-row>
+                            <v-col cols="6" sm="6">
+                                <v-select label="附加包格式" v-model="input.beExtType" :items="consts.beExtType"></v-select>
+                            </v-col>
+                            <v-col cols="6" sm="6">
+                                <resource-selector></resource-selector>
+                            </v-col>
+                        </v-row>
+                    </v-tab-item>
+                </v-tabs-items>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>cloud_download</v-icon>
                     提交构建选项
@@ -187,56 +172,20 @@
                     <v-expansion-panels v-model="logsPanel" multiple>
                         <v-expansion-panel v-for="(item,i) in logs" :key="i">
                             <v-expansion-panel-header>
-                                {% raw %}{{moment(new Date(item.ts)).format('YYYY-MM-DD HH:mm:ss')}} {{ item.title }}{% endraw %}
+                                {{new Date(Number(item.ts)).toLocaleString()}} {{ item.title }}
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
-                                <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{% raw %}{{item.content}}{% endraw %}</pre>
+                                <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{{item.content}}</pre>
                                 <v-btn v-if="item.filename" @click="open('builds/' + item.filename)" outlined
                                        color="indigo">
                                     下载
-                                </v-btn>
-                                <v-btn v-else
-                                       @click="open('https://github.com/lakejason0/mcwzh-meme-resourcepack/issues/new/choose')"
-                                       dark color="black">
-                                    <v-icon left>bug_report</v-icon>
-                                    反馈
                                 </v-btn>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                     </v-expansion-panels>
                 </div>
                 <v-divider style="margin:15px 0"></v-divider>
-                <v-row>
-                    <v-col col="12" md="6">
-                        <v-card outlined>
-                            <v-list-item three-line>
-                                <v-list-item-content>
-                                    <div class="overline mb-4">SPONSOR</div>
-                                    <v-list-item-title class="headline mb-1">梗体中文 由 SPGoding 赞助</v-list-item-title>
-                                    <v-list-item-subtitle>SPGoding 是一位 Mojira 全域管<del>埋</del>员、MCBBS 艺术家，代表作《大憨批》VSCode 插件。ta
-                                        热心的赠送了梗体中文 7 天的 MCBBS 广告位。
-                                    </v-list-item-subtitle>
-                                </v-list-item-content>
-
-                                <v-list-item-avatar tile color="grey" size="80">
-                                    <v-img src="https://www.mcbbs.net/uc_server/data/avatar/002/44/43/78_avatar_big.jpg"></v-img>
-                                </v-list-item-avatar>
-                            </v-list-item>
-
-                            <v-card-actions>
-                                <v-btn rel="noopener noreferrer" text href="https://www.mcbbs.net/?2444378">MCBBS 资料页
-                                </v-btn>
-                                <v-btn rel="noopener noreferrer" text
-                                       href="https://www.mcbbs.net/thread-926724-1-1.html">《大憨批》介绍
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-col>
-                </v-row>
             </v-container>
-            {% if footer_existence %}
-                {% include './custom/footer.html' %}
-            {% endif %}
         </v-main>
     </v-app>
 </div>
@@ -246,13 +195,6 @@
         methods: {
             open(name) {
                 window.open(name)
-            },
-            toggleResource() {
-                if (this.input.resource.length === this.consts.resourceList.length) {
-                    this.input.resource = []
-                } else {
-                    this.input.resource = this.consts.resourceList
-                }
             },
             submit() {
                 this.loading = true
@@ -274,13 +216,18 @@
                 }
 
                 let data = Object.assign({}, this.inputBasic, {
+                    _be: this.whetherUseBE,
                     language: getNames(this.input.languageOption, this.input.language, "modules/"),
-                    resource: this.input.resource.map(v => v.slice("modules/".length)),
+                    resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
-                    sfw: this.input.language.includes("modules/sfw")
+                    sfw: this.input.language.includes("modules/sfw"),
+                    type: this.inputBasic.format === 3 ? 'compat' : 'normal'
+                }, this.whetherUseBE && {
+                    type: this.input.beExtType
                 })
                 console.log(data)
+                window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
                 axios({url: '/ajax', method: 'POST', data}).then(function (res) {
                     console.log(res.data)
                     this.logs.unshift({
@@ -315,11 +262,11 @@
             }
         },
         data: () => ({
+            tab: null,
             logsPanel: [],
             loading: false,
             inputBasic: {
-                type: "normal",
-                debug: false
+                format: 6
             },
             logs: [],
             input: {
@@ -328,39 +275,121 @@
                 modOption: "all",
                 mod: [],
                 resource: [],
-                language: []
+                language: [],
+                beExtType: 'zip'
             }
         }),
-        computed: {
-            resourceIcon() {
-                if (this.input.resource.length === 0) {
-                    return 'mdi-checkbox-blank-outline'
-                } else if (this.input.resource.length === this.consts.resourceList.length) {
-                    return 'mdi-close-box'
-                } else {
-                    return 'mdi-minus-box'
+        beforeMount() {
+            let that = this
+            Vue.component('resource-selector', {
+                template: `
+    <v-select label="附加包/材质选择" multiple
+                          :items="consts.resourceList" v-model="resource">
+                    <template v-slot:prepend-item>
+                        <v-list-item ripple @click="toggleResource">
+                            <v-list-item-action>
+                                <v-icon> {{ resourceIcon }}</v-icon>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>全选</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider class="mt-2"></v-divider>
+                    </template>
+                    <template v-slot:item="data">
+                        <v-list-item v-bind="data.attrs" v-on="data.on">
+                            <v-list-item-action>
+                                <v-checkbox :value="data.attrs.inputValue"
+                                            @change="data.parent.$emit('select')"></v-checkbox>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title> {{ data.item }} </v-list-item-title>
+                                <v-list-item-subtitle> {{ getManifest(data.item)
+                                    }}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                </v-select>
+  `,
+                computed: {
+                    resourceIcon() {
+                        if (this.resource.length === 0) {
+                            return 'mdi-checkbox-blank-outline'
+                        } else if (this.resource.length === that.consts.resourceList.length) {
+                            return 'mdi-close-box'
+                        } else {
+                            return 'mdi-minus-box'
+                        }
+                    },
+                    consts() {
+                        return that.consts
+                    }
+                },
+                watch: {
+                    resource(newVal, oldVal) {
+                        console.log(newVal)
+                        that.input.resource = newVal
+                    }
+                },
+                methods: {
+                    getManifest(arguments) {
+                        return that.getManifest(arguments)
+                    },
+                    toggleResource() {
+                        if (this.resource.length === this.consts.resourceList.length) {
+                            this.resource = []
+                        } else {
+                            this.resource = this.consts.resourceList
+                        }
+                    },
+                },
+                data() {
+                    return {
+                        resource: []
+                    }
                 }
+            });
+        },
+        computed: {
+            whetherUseBE() {
+                return this.tab === 1
             },
-            consts: () => ({
-                type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
-                resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
-                    text: "自定义",
-                    value: "custom"
-                }],
-                modOption: [{text: "所有", value: "all"}, {value: "none", text: "无"}, {
-                    value: "custom",
-                    text: "自定义"
-                }],
-                languageOption: [{value: "none", text: "无"}, {
-                    value: "custom",
-                    text: "自定义"
-                }],
-                modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件(未汉化)'})
-                    .concat({{ enmods|tojson }}),
-                languageList: {{ language|tojson }},
-                resourceList: {{ resource|tojson }},
-                manifests: {{ manifests|tojson }}
-            })
+            consts: {
+                cache: false,
+                get() {
+                    return {
+                        type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
+                        resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
+                            text: "自定义",
+                            value: "custom"
+                        }],
+                        modOption: [{text: "所有", value: "all"}, {value: "none", text: "无"}, {
+                            value: "custom",
+                            text: "自定义"
+                        }],
+                        languageOption: [{value: "none", text: "无"}, {
+                            value: "custom",
+                            text: "自定义"
+                        }],
+                        beExtType: ['mcpack', 'zip'],
+                        modList: [{header: 'Mod文件'}].concat(["mods/techreborn.json", "mods/modmenu.json", "mods/minihud.json", "mods/illuminations.json", "mods/simplevoidworld.json", "mods/mousewheelie.json", "mods/mycommands.json", "mods/tweakeroo.json", "mods/corail_woodcutter.json", "mods/vanilla_hammers.json", "mods/cloth-config2.json", "mods/orderly.json", "mods/inventorysorter.json", "mods/glassdoor.json", "mods/terrestria.json", "mods/expandedstorage.json", "mods/roughlyenoughitems.json", "mods/torcherino.json", "mods/simplexterrain.json", "mods/diggusmaximus.json", "mods/craftingpp.json", "mods/slimefunction.json", "mods/itemscroller.json", "mods/adorn.json", "mods/durabilityviewer.json", "mods/raa.json", "mods/hwyla.json", "mods/traverse.json", "mods/immersive_portals.json", "mods/sodium.json", "mods/optifine.lang", "mods/dynamicfps.json", "mods/inventoryprofiles.json", "mods/voxelmap.json", "mods/lightoverlay.json", "mods/justmap.json", "mods/litematica.json"]).concat({header: 'Mod文件(未汉化)'})
+                            .concat(["en-mods/craftpresence.json", "en-mods/betternether.json", "en-mods/tdnf.json", "en-mods/blockus.json", "en-mods/extraalchemy.json", "en-mods/shulkerboxtooltip.json"]),
+                        languageList: ["modules/diamond_hoe", "modules/attributes", "modules/selectworld_gui_old", "modules/sfw", "modules/nether_biome", "modules/trapdoor", "modules/spawnpoint_before_20w12a", "modules/20w14inf", "modules/old_strings", "modules/combat_test", "modules/spawnpoint_before_20w29a"],
+                        resourceList: this.whetherUseBE ? ["a_letter", "observer_think", "blue_ui", "trident_model", "bagify"] : ["modules/red_leaf_valley", "modules/totem_model", "modules/BUGJUMP", "modules/a_letter", "modules/observer_think", "modules/disco_ball", "modules/map_override", "modules/grass_enchanted", "modules/author_zombies", "modules/bagify", "modules/meme_splashes", "modules/annoying_sounds", "modules/mopemope", "modules/Lie-nus_and_more_things", "modules/brewing_stand_model"],
+                        manifests: this.whetherUseBE ? {"a_letter": "\u4e00\u5c01\u4fe1\u3002\u4e5f\u8bb8\u6253\u5b8c\u9f99\u4f1a\u51fa\u73b0\u3002", "bagify": "\u5e2e\u4f60\u628a\u6240\u6709\u7c89\u672b\u548c\u788e\u5c51\u88c5\u8fdb\u888b\u5b50\u91cc\u3002", "blue_ui": "\u7279\u522b\u84dd\uff0c\u84dd\u51fa\u6e56\u3002", "observer_think": "\u601d\u8fa9\u8005.png", "trident_model": "\u73b0\u5728\u53ef\u4ee5\u628a\u4f5c\u8005\u4e22\u6765\u4e22\u53bb\u5566\uff01"} : {"20w14inf": "\u63d0\u4f9b\u5bf920w14inf\u5feb\u7167\u7684\u6897\u4f53\u4e2d\u6587\u6709\u9650\u652f\u6301", "BUGJUMP": "\u5565\uff1f\u8fd9\u4e2a\u516c\u53f8\u4e0d\u662f\u53ebBugjump\u5417\uff1f\uff08\u53ef\u80fd\u9700\u8981Optifine\uff09", "Lie-nus_and_more_things": "lttstore.com", "a_letter": "\u4e00\u5c01\u4fe1\u3002\u4e5f\u8bb8\u6253\u5b8c\u9f99\u4f1a\u51fa\u73b0\u3002", "annoying_sounds": "\u70e6\u4eba\u7684\u97f3\u6548\u3002", "attributes": "20w14a\u4ee5\u524d\u7248\u672c\u7684\u5c5e\u6027\u540d\u79f0", "author_zombies": "\u8ba9\u50f5\u5c38\u968f\u673a\u53d8\u6210\u5404\u4e2a\u4f5c\u8005\u7684\u4e9a\u5b50\u3002", "bagify": "\u5e2e\u4f60\u628a\u6240\u6709\u7c89\u672b\u88c5\u5230\u888b\u5b50\u91cc\u3002", "brewing_stand_model": "\u5c06\u70bc\u836f\u53f0\u53d8\u6210\u624b\u529e\u3002", "combat_test": "\u63d0\u4f9b\u5bf9Combat Test 6\u5feb\u7167\u7684\u6897\u4f53\u4e2d\u6587\u6709\u9650\u652f\u6301", "diamond_hoe": "20w20a\u4ee5\u524d\u7248\u672c\u7684\u201c\u7ec8\u6781\u5949\u732e\u201d\u8fdb\u5ea6", "disco_ball": "\u7ea2\u77f3\u706f\u7403\u3002\u6709\u52a8\u6001\u6750\u8d28\u7684\u90a3\u79cd\u3002", "grass_enchanted": "\u8349\uff08\u9644\u9b54\uff09", "map_override": "\u5728\u5730\u56fe\u4e0a\u5c55\u793a\u6211\u4eec\u7684Slogan\u3002", "meme_splashes": "\u95ea\u70c1\u6807\u8bed\u3002", "mopemope": "\u5b9d \u5b9d \u91d1 \u66f2\uff0c\u5988 \u5988 \u653e \u5fc3", "nether_biome": "20w06a\u4ee5\u524d\u7684\u4e0b\u754c\u751f\u7269\u7fa4\u7cfb", "observer_think": "\u601d\u8fa9\u8005.jpg", "old_strings": "\u65e7\u7248\u672c\u7684\u5404\u79cd\u5b57\u7b26\u4e32", "red_leaf_valley": "\u7ea2\u53f6\u8c37\uff0c\u8ba9\u767d\u6866\u53d8\u4e3a\u7ea2\u67ab", "selectworld_gui_old": "20w28a\u4ee5\u524d\u7684\u751f\u6210\u4e16\u754c\u5b57\u7b26\u4e32", "sfw": "\u9002\u7528\u4e8e\u5de5\u4f5c\u573a\u5408\u7684\u6587\u672c\u66ff\u6362\u3002", "spawnpoint_before_20w12a": "\u5bf920w12a\u4ee5\u524d\u7248\u672c\u7684\u91cd\u751f\u4fe1\u606f\u7684\u66ff\u6362", "spawnpoint_before_20w29a": "\u5bf920w29a\u4ee5\u524d\u7248\u672c\u7684\u91cd\u751f\u4fe1\u606f\u7684\u66ff\u6362", "totem_model": "\u628a\u4e0d\u6b7b\u56fe\u817e\u53d8\u6210\u624b\u529e\u3002", "trapdoor": "\u5bf920w14a\u4ee5\u524d\u7248\u672c\u7684\u6d3b\u677f\u95e8\u5b57\u5e55\u66f4\u6b63\u3002"},
+                        versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
+                            text: '1.13 - 1.14.4', value: 4
+                        }, {
+                            text: '1.11 - 1.12.2', value: 3
+                        }]
+                    }
+                }
+            }
+        },
+        watch: {
+            tab() {
+                this.input.resource = []
+            }
         },
         vuetify: new Vuetify(),
     })
