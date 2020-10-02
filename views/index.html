@@ -360,7 +360,12 @@
                     .concat({{ enmods|tojson }}),
                 languageList: {{ language|tojson }},
                 resourceList: {{ resource|tojson }},
-                manifests: {{ manifests|tojson }}
+                manifests: {{ manifests|tojson }},
+                versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
+                            text: '1.13 - 1.14.4', value: 4
+                        }, {
+                            text: '1.11 - 1.12.2', value: 3
+                        }]
             })
         },
         vuetify: new Vuetify(),
